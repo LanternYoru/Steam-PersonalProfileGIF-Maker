@@ -11,8 +11,10 @@ def openSaveDir():
     if not os.path.exists('.\\output'):
         os.mkdir('.\\output')
     os.startfile(".\\output")
-    pass
 
+def checkFilesize(filename):
+    stats = os.stat(filename)
+    return float((stats.st_size/(1024**2)).__format__("0.2f"))
 
 class SteamProfileGifMaker(QWidget):
     def __init__(self):
@@ -120,11 +122,6 @@ def main():
     window = SteamProfileGifMaker()
     window.show()
     sys.exit(app.exec_())
-
-
-def checkFilesize(filename):
-    stats = os.stat(filename)
-    return float((stats.st_size/(1024**2)).__format__("0.2f"))
 
 
 if __name__ == '__main__':
