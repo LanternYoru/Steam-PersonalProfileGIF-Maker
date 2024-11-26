@@ -2,7 +2,7 @@ import os
 import sys
 
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QHBoxLayout, QVBoxLayout, \
-    QMessageBox, QFileDialog
+    QMessageBox, QFileDialog, QProgressBar
 
 from ffmDivideVideo import ffmDivideVideo
 
@@ -34,7 +34,6 @@ class SteamProfileGifMaker(QWidget):
         self.EnterButton = QPushButton("分割", self)
         self.SearchButton = QPushButton("浏览", self)
         self.SaveButton = QPushButton("打开存储目录", self)
-
         # 设置布局
         self.initLayout()
 
@@ -71,7 +70,6 @@ class SteamProfileGifMaker(QWidget):
         bodyLayout.addLayout(subLayout2)
         subLayout2.addWidget(self.EnterButton)
         subLayout2.addWidget(self.SaveButton)
-
         self.setLayout(bodyLayout)
         # 绑定按钮事件的槽函数
     def getFromQt(self):
@@ -98,12 +96,12 @@ class SteamProfileGifMaker(QWidget):
         fileNamelist = []
         oversizedFiles = []
         maxNum = 0
-        for i in range(piecesnum):
+        for i in range(1,piecesnum+1):
             fileNamelist.append(f"{fileName}_{i}_output.gif")
         for index, filename in enumerate(fileNamelist):
             maxNum = max(maxNum, checkFilesize(filename))
             if checkFilesize(filename) > 5.0:
-                oversizedFiles.append(index)
+                oversizedFiles.append(index+1)
         if maxNum < 5.0:
             QMessageBox.information(self, "完成", f"完成")
         else:

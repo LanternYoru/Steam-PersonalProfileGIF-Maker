@@ -1,8 +1,5 @@
 import ffmpeg
 import os
-
-from ffmpeg import overwrite_output
-
 from hexEditorForGif import hexEditorForGif
 
 
@@ -26,7 +23,7 @@ def ffmDivideVideo(directory=None, divnum=-1, fpsnum=-1, piecesnum=5):
     ih = stream['height']
     if piecesnum == 5:
         x=0
-        for i in range(5):
+        for i in range(1,6):
             output_filename = f".\\output\\{fileName}_{i}_output.gif"
             ffmpeg.input(afterFile).filter('crop','iw*0.2','ih',f'{x}',f'0').output(f'.\\output\\{fileName}_{i}_output.gif').run(overwrite_output=True)
             hexEditorForGif(output_filename)
@@ -34,7 +31,7 @@ def ffmDivideVideo(directory=None, divnum=-1, fpsnum=-1, piecesnum=5):
     elif piecesnum == 10:
         x=0
         y=0
-        index=0
+        index=1
         for i in range(2):
             for j in range(5):
                 output_filename = f'.\\output\\{fileName}_{i}_output.gif'
@@ -48,7 +45,7 @@ def ffmDivideVideo(directory=None, divnum=-1, fpsnum=-1, piecesnum=5):
     elif piecesnum == 15:
         x=0
         y=0
-        index=0
+        index=1
         for i in range(3):
             for j in range(5):
                 output_filename = f'.\\output\\{fileName}_{i}_output.gif'
