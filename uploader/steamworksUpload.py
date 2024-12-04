@@ -88,7 +88,7 @@ def main():
         use_filenames = title_choice == "1"
         files, titles = get_files_and_titles(uploading_folder, use_filenames)
         print(f"正在上传的文件是：{titles}")
-
+        input("按下回车确认")
         # 上传文件
         upload_files(driver, files, titles)
         print("文件上传完成！")

@@ -92,7 +92,7 @@ class SteamProfileGifMaker(QWidget):
             piecesnum = int(self.piecesLine.text())
         ffmDivideVideo(directory, divnum, fpsnum, piecesnum)
         fileName, _ = os.path.splitext(directory)
-        fileName = ".\\output\\" + os.path.basename(fileName)
+        fileName = f".\\output\\{os.path.basename(fileName)}\\" + os.path.basename(fileName)
         fileNamelist = []
         oversizedFiles = []
         maxNum = 0

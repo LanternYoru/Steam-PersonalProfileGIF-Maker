@@ -8,15 +8,17 @@ def ffmDivideVideo(directory=None, divnum=-1, fpsnum=-1, piecesnum=5):
     fileName = os.path.basename(fileName)
     if not os.path.exists('.\\output'):
         os.mkdir('.\\output')
+    if not os.path.exists('.\\output\\' + fileName):
+        os.mkdir('.\\output\\' + fileName)
     if divnum == -1 and fpsnum == -1:
-        ffmpeg.input(directory).output(f'.\\output\\{fileName}_output.gif').run(overwrite_output=True)
+        ffmpeg.input(directory).output(f'.\\output\\{fileName}\\{fileName}_output.gif').run(overwrite_output=True)
     elif fpsnum == -1:
-        ffmpeg.input(directory).filter('scale', f'iw/{divnum}', f'ih/{divnum}').output(f'.\\output\\{fileName}_output.gif').run(overwrite_output=True)
+        ffmpeg.input(directory).filter('scale', f'iw/{divnum}', f'ih/{divnum}').output(f'.\\output\\{fileName}\\{fileName}_output.gif').run(overwrite_output=True)
     elif divnum == -1:
-        ffmpeg.input(directory).output(f'{fileName}_output.gif').run()
+        ffmpeg.input(directory).output(f'.\\output\\{fileName}\\{fileName}_output.gif').run()
     else:
-        ffmpeg.input(directory).filter('scale',f'iw/{divnum}',f'ih/{divnum}').output(f'.\\output\\{fileName}_output.gif', r=f'{fpsnum}').run(overwrite_output=True)
-    afterFile=f".\\output\\{fileName}_output.gif"
+        ffmpeg.input(directory).filter('scale',f'iw/{divnum}',f'ih/{divnum}').output(f'.\\output\\{fileName}\\{fileName}_output.gif', r=f'{fpsnum}').run(overwrite_output=True)
+    afterFile=f".\\output\\{fileName}\\{fileName}_output.gif"
     streams = ffmpeg.probe(afterFile, select_streams='v')
     stream = next((stream for stream in streams.get('streams', []) if stream['codec_type'] == 'video'), None)
     iw = stream['width']
@@ -24,8 +26,8 @@ def ffmDivideVideo(directory=None, divnum=-1, fpsnum=-1, piecesnum=5):
     if piecesnum == 5:
         x=0
         for i in range(1,6):
-            output_filename = f".\\output\\{fileName}_{i}_output.gif"
-            ffmpeg.input(afterFile).filter('crop','iw*0.2','ih',f'{x}',f'0').output(f'.\\output\\{fileName}_{i}_output.gif').run(overwrite_output=True)
+            output_filename = f".\\output\\{fileName}\\{fileName}_{i}_output.gif"
+            ffmpeg.input(afterFile).filter('crop','iw*0.2','ih',f'{x}',f'0').output(f'.\\output\\{fileName}\\{fileName}_{i}_output.gif').run(overwrite_output=True)
             hexEditorForGif(output_filename)
             x=x+(iw*0.2)
     elif piecesnum == 10:
@@ -34,9 +36,9 @@ def ffmDivideVideo(directory=None, divnum=-1, fpsnum=-1, piecesnum=5):
         index=1
         for i in range(2):
             for j in range(5):
-                output_filename = f'.\\output\\{fileName}_{i}_output.gif'
+                output_filename = f'.\\output\\{fileName}\\{fileName}_{i}_output.gif'
                 ffmpeg.input(afterFile).filter('crop', 'iw*0.2', 'ih*0.5', f'{x}', f'{y}').output(
-                    f'.\\output\\{fileName}_{index}_output.gif').run(overwrite_output=True)
+                    f'.\\output\\{fileName}\\{fileName}_{index}_output.gif').run(overwrite_output=True)
                 hexEditorForGif(output_filename)
                 x = x + (iw * 0.2)
                 index = index + 1
@@ -48,9 +50,9 @@ def ffmDivideVideo(directory=None, divnum=-1, fpsnum=-1, piecesnum=5):
         index=1
         for i in range(3):
             for j in range(5):
-                output_filename = f'.\\output\\{fileName}_{i}_output.gif'
+                output_filename = f'.\\output\\{fileName}\\{fileName}_{i}_output.gif'
                 ffmpeg.input(afterFile).filter('crop', 'iw*0.2', 'ih*0.33', f'{x}', f'{y}').output(
-                    f'.\\output\\{fileName}_{index}_output.gif').run(overwrite_output=True)
+                    f'.\\output\\{fileName}\\{fileName}_{index}_output.gif').run(overwrite_output=True)
                 hexEditorForGif(output_filename)
                 x = x + (iw * 0.2)
                 index = index + 1
