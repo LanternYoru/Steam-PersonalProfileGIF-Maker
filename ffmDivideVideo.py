@@ -36,7 +36,7 @@ def ffmDivideVideo(directory=None, divnum=-1, fpsnum=-1, piecesnum=5):
         index=1
         for i in range(2):
             for j in range(5):
-                output_filename = f'.\\output\\{fileName}\\{fileName}_{i}_output.gif'
+                output_filename = f'.\\output\\{fileName}\\{fileName}_{index}_output.gif'
                 ffmpeg.input(afterFile).filter('crop', 'iw*0.2', 'ih*0.5', f'{x}', f'{y}').output(
                     f'.\\output\\{fileName}\\{fileName}_{index}_output.gif').run(overwrite_output=True)
                 hexEditorForGif(output_filename)
@@ -50,7 +50,7 @@ def ffmDivideVideo(directory=None, divnum=-1, fpsnum=-1, piecesnum=5):
         index=1
         for i in range(3):
             for j in range(5):
-                output_filename = f'.\\output\\{fileName}\\{fileName}_{i}_output.gif'
+                output_filename = f'.\\output\\{fileName}\\{fileName}_{index}_output.gif'
                 ffmpeg.input(afterFile).filter('crop', 'iw*0.2', 'ih*0.33', f'{x}', f'{y}').output(
                     f'.\\output\\{fileName}\\{fileName}_{index}_output.gif').run(overwrite_output=True)
                 hexEditorForGif(output_filename)

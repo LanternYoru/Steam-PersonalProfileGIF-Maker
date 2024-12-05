@@ -1,5 +1,7 @@
 import os
 import json
+import re
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
@@ -27,6 +29,9 @@ def setup_driver(headless=False):
     options = Options()
     if headless:
         options.add_argument('--headless')
+        options.add_argument('--log-level=3')
+    else:
+        options.add_argument('--log-level=3')
     return webdriver.Chrome(options=options)
 
 
@@ -49,12 +54,23 @@ def upload_files(driver, files, titles):
 
 def get_files_and_titles(uploading_folder, use_filenames):
     """获取文件路径和对应标题。"""
-    files = [os.path.join(uploading_folder, f) for f in os.listdir(uploading_folder) if not f.startswith('.')][:-1]
+    files=get_sorted_files(uploading_folder)
     if use_filenames:
         titles = [os.path.splitext(os.path.basename(f))[0] for f in files]
     else:
         titles = [str(i + 1) for i in range(len(files))]
     return files, titles
+
+def get_sorted_files(uploading_folder):
+    """给每个分块的GIF排序，并且不返回原GIF。"""
+    files = [os.path.join(uploading_folder, f) for f in os.listdir(uploading_folder) if f.endswith('_output.gif')]
+    def extract_index(file_path):
+        file_name = os.path.basename(file_path)
+        match=re.search(r"_(\d+)_output\.gif$", file_name)
+        return int(match.group(1)) if match else float('inf')
+    sorted_files = sorted(files, key=extract_index)
+    return sorted_files[:-1]
+
 
 
 def main():
